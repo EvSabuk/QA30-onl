@@ -1,4 +1,9 @@
 # Default ignored files
 /shelf/
+out/
 /workspace.xml
+
+# Java build output
 /out/
+target/
+build/

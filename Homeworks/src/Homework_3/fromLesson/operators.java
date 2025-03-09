@@ -5,7 +5,7 @@ public class operators {
     public static void main(String[] args){
        // getIfOperator();
         setSwitch();
-
+//
     }
 
     public static void getIfOperator(){
@@ -13,7 +13,7 @@ public class operators {
 
         System.out.print("Please, enter your age: ");
         int age = input.nextInt();
-        if (age >= 18) {
+        if (age >= 12) {
             System.out.println("Вы совершеннолетний");
         }
 
