@@ -11,7 +11,7 @@ public class Homework {
       //  getArrayWithEven();
       //  changeOddIndexToZero();
        // getSortedArray();
-     //   getBubbleSort();
+        getBubbleSort();
     }
 
     public static Scanner input() {
