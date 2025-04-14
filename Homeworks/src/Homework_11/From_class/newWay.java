@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class newWay {
     public static void main(String[] args) {
-        getCalculation("22/2/4");
+        getStringForCalculation();
 
     }
 
@@ -33,37 +33,69 @@ public class newWay {
     }
 
     public static double getCalculation(String row) {
-        String[] splitExpression = row.split("[+/\\-*]");
-        String[] operators = row.split("\\d+");
-        String[] operatorsSkip = Arrays.copyOfRange(operators, 1, operators.length);
 
-        if (row.contains("/") || row.contains("*")) {
-            if (row.indexOf("/") > row.indexOf("*") ) {
-                int IndexOperator =  indexOf(operatorsSkip, "/");
+        String value = row;
 
-                double valueL = Double.parseDouble(splitExpression[IndexOperator]);
-                double valueR = Double.parseDouble(splitExpression[IndexOperator+1]);
 
-                System.out.println(valueL/valueR);
+        while (value.contains("/") || value.contains("*") || value.contains("+") || value.contains("-")) {
+            String[] splitExpression = value.split("[+/\\-*]");
+            String[] operators = value.split("\\d+(\\.\\d+)?");
+            String[] operatorsSkip = Arrays.copyOfRange(operators, 1, operators.length);
+            if (value.contains("/") || value.contains("*")) {
+                if (!value.contains("*") || value.indexOf("/") < value.indexOf("*") && value.contains("/")) {
+                    int IndexOperator = indexOf(operatorsSkip, "/");
+
+                    double valueL = Double.parseDouble(splitExpression[IndexOperator]);
+                    double valueR = Double.parseDouble(splitExpression[IndexOperator + 1]);
+
+                    double valueTotal = valueL / valueR;
+                    String forReplace = (splitExpression[IndexOperator] + "/" + (splitExpression[IndexOperator + 1]));
+
+                    value = value.replace(String.valueOf(forReplace), String.valueOf(valueTotal));
+
+                }  else if (!value.contains("/") || value.indexOf("/") > value.indexOf("*")) {
+                    int IndexOperator = indexOf(operatorsSkip, "*");
+
+                    double valueL = Double.parseDouble(splitExpression[IndexOperator]);
+                    double valueR = Double.parseDouble(splitExpression[IndexOperator + 1]);
+
+                    double valueTotal = valueL * valueR;
+                    String forReplace = (splitExpression[IndexOperator] + "*" + (splitExpression[IndexOperator + 1]));
+
+                    value = value.replace(forReplace, String.valueOf(valueTotal));
+
+                }
+
+            }else if (value.contains("+") || value.contains("-")) {
+                if (!value.contains("-") || value.indexOf("+") < value.indexOf("-") && value.contains("+")) {
+                    int IndexOperator = indexOf(operatorsSkip, "+");
+
+                    double valueL = Double.parseDouble(splitExpression[IndexOperator]);
+                    double valueR = Double.parseDouble(splitExpression[IndexOperator + 1]);
+
+                    double valueTotal = valueL + valueR;
+                    String forReplace = (splitExpression[IndexOperator] + "+" + (splitExpression[IndexOperator + 1]));
+
+                    value = value.replace(forReplace, String.valueOf(valueTotal));
+                    System.out.println(value);
+                }  else if (!value.contains("+") || value.indexOf("+") > value.indexOf("*")) {
+                    int IndexOperator = indexOf(operatorsSkip, "-");
+
+                    double valueL = Double.parseDouble(splitExpression[IndexOperator]);
+                    double valueR = Double.parseDouble(splitExpression[IndexOperator + 1]);
+
+                    double valueTotal = valueL - valueR;
+                    String forReplace = (splitExpression[IndexOperator] + "-" + (splitExpression[IndexOperator + 1]));
+
+                    value = value.replace(forReplace, String.valueOf(valueTotal));
+                    System.out.println(value);
+                }
+
             }
-
         }
-        return 0;
-    }
-
- /*
-        while (row.contains("/")) {
-            int finish = row.indexOf(")");
-            int start = row.lastIndexOf("(", finish);
-
-            String union = row.substring(start + 1, finish);
-            double calculation = getCalculation(union);
-
-            row = row.substring(0, start) + calculation + row.substring(finish + 1);
+            return Double.parseDouble(value);
         }
-        return getCalculation(row);
-    }
-*/
+
 
 
     public static Scanner input() {
